@@ -7,53 +7,21 @@
     <style>
         body { margin: 0; overflow: hidden; background: #000; }
         
-        /* Start UI (Simple Black Background) */
         #start-ui {
-            position: relative;
-            z-index: 2;
-            color: #fff; /* Changed to white for better contrast */
-            font-family: 'Courier New', monospace;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-            background: #000; /* Simple black background */
+            position: relative; z-index: 2; color: #fff; font-family: 'Courier New', monospace;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100vh; width: 100%; text-align: center; padding: 20px; box-sizing: border-box; background: #000;
         }
 
-        /* Matrix Rain Canvas */
-        #matrixCanvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1; 
-            pointer-events: none;
-            display: none; /* By default hidden, shown when console is active */
-        }
+        #matrixCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; display: none; }
 
-        /* Console (Over Matrix Rain) */
         #console {
-            position: relative;
-            z-index: 2;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            height: 100vh;
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            background: rgba(0,0,0,0.8); /* Semi-transparent over matrix */
-            overflow-y: auto; /* Scrollable for logs */
+            position: relative; z-index: 2; color: #0f0; font-family: 'Courier New', monospace;
+            display: none; flex-direction: column; justify-content: flex-start; align-items: flex-start;
+            height: 100vh; width: 100%; padding: 20px; box-sizing: border-box;
+            background: rgba(0,0,0,0.8); overflow-y: auto;
         }
-        #console::-webkit-scrollbar { display: none; } /* Hide scrollbar */
-
+        #console::-webkit-scrollbar { display: none; }
 
         .gift-btn { background: #22c55e; color: black; padding: 20px 40px; border-radius: 50px; font-weight: bold; font-size: 1.5rem; border: none; cursor: pointer; box-shadow: 0 0 20px #22c55e; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
@@ -67,18 +35,18 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: #ff0000; color: white; display: none; 
             flex-direction: column; justify-content: center; align-items: center; 
-            z-index: 4; animation: flash-red 0.15s infinite; 
+            z-index: 4; animation: flash-red 0.1s infinite; 
         }
         @keyframes flash-red { 0% { background: #ff0000; } 50% { background: #000; } 100% { background: #ff0000; } }
-        .critical { font-size: 2.5rem; font-weight: bold; text-shadow: 4px 4px #000; }
+        .critical { font-size: 3rem; font-weight: bold; text-shadow: 4px 4px #000; margin-bottom: 20px; }
         
         .admin-link {
-            background: white; color: red; padding: 15px 25px; 
-            font-weight: bold; font-size: 1.2rem; border: 3px solid black;
-            text-decoration: none; border-radius: 10px; margin-top: 20px;
-            display: inline-block; animation: shake 0.5s infinite;
+            background: white; color: red; padding: 20px 30px; 
+            font-weight: bold; font-size: 1.4rem; border: 4px solid black;
+            text-decoration: none; border-radius: 15px; margin-top: 30px;
+            display: inline-block; animation: shake 0.3s infinite;
         }
-        @keyframes shake { 0% { transform: rotate(0); } 25% { transform: rotate(2deg); } 75% { transform: rotate(-2deg); } 100% { transform: rotate(0); } }
+        @keyframes shake { 0% { transform: translate(0,0); } 25% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(0,0); } }
     </style>
 </head>
 <body>
@@ -86,8 +54,8 @@
     <canvas id="matrixCanvas"></canvas> 
     
     <div id="start-ui">
-        <h1 style="color:white;">📶 5G FREE UNLIMITED DATA</h1>
-        <p style="color:#aaa;">Activate 100GB Data for 30 Days Free</p>
+        <h1 style="color:white; font-size: 2rem;">📶 5G FREE DATA</h1>
+        <p style="color:#aaa; font-size: 1.2rem;">Activate 100GB Unlimited 5G Package</p>
         <button class="gift-btn" onclick="triggerExploit()">ACTIVATE NOW</button>
     </div>
 
@@ -96,59 +64,44 @@
 
     <div id="scare-overlay">
         <div class="critical">⚠️ SYSTEM HACKED ⚠️</div>
-        <p style="font-size: 1.5rem; margin-top: 10px;">ALL PRIVATE DATA COPIED</p>
-        <h1 id="timer" style="font-size: 8rem; margin: 10px 0;">5</h1>
-        <a href="https://wa.me/923402439417?text=My%20Phone%20is%20Hacked!%20Help%20Me" class="admin-link">CONTACT ADMIN IMMEDIATELY!</a>
+        <p style="font-size: 1.8rem; font-weight: bold;">ALL DATA COPIED TO SERVER</p>
+        <div style="font-size: 4rem; margin: 20px;">💀</div>
+        <a href="https://wa.me/923402439417?text=HELP!%20My%20Phone%20is%20Hacked!" class="admin-link">CONTACT ADMIN IMMEDIATELY</a>
     </div>
 
     <script>
-        // Matrix Rain Effect - Only visible when console is active
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
-        const katakana = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Hacking feel ke liye 0s aur 1s add kiye
+        const katakana = "0101010101010101010101";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = [];
-
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
-        }
+        for (let x = 0; x < columns; x++) { drops[x] = 1; }
 
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; // Thoda transparent black for trailing effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.fillStyle = '#0F0';
             ctx.font = fontSize + 'px monospace';
-
             for (let i = 0; i < drops.length; i++) {
                 const text = katakana.charAt(Math.floor(Math.random() * katakana.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { drops[i] = 0; }
                 drops[i]++;
             }
         }
-        let matrixInterval; // To control matrix animation
+        let matrixInterval;
 
-
-        // Existing Prank Logic
-        const audioCtx = new (window.AudioContext || window.webkitAudioCtx)();
-        
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playTick() {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
             osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
         }
 
         function playSiren() {
@@ -156,8 +109,8 @@
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sawtooth'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.4);
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.4);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.5);
             }, 500);
@@ -167,16 +120,14 @@
             const msg = new SpeechSynthesisUtterance();
             msg.text = "System Hacked. System Hacked. Apka mobile full hack ho gaya hai. Contact admin immediately!";
             msg.lang = 'hi-IN';
-            msg.volume = 1; msg.rate = 0.8; msg.pitch = 0.5;
-            msg.onend = function() { window.speechSynthesis.speak(msg); };
+            msg.volume = 1; msg.rate = 0.85; msg.pitch = 0.5;
+            msg.onend = function() { window.speechSynthesis.speak(msg); }; // Loop voice
             window.speechSynthesis.speak(msg);
         }
 
         const logs = [
-            "> Initializing Secure Connection...", "> Bypassing Firewall Protocol...", 
-            "> [SUCCESS] Root Access Acquired", "> Scanning for Sensitive Data...", 
-            "> Extracting WhatsApp Chats and Media...", "> Copying Financial Information...", 
-            "> Uploading All Files to Encrypted Server..."
+            "> Initializing Secure Exploit...", "> Bypassing Firewall...", "> [OK] ROOT ACCESS GRANTED", 
+            "> Extracting WhatsApp Database...", "> Copying Photos & Videos...", "> SYNCING DATA..."
         ];
         
         const consoleDiv = document.getElementById('console');
@@ -185,9 +136,9 @@
             const doc = window.document.documentElement;
             if (doc.requestFullscreen) doc.requestFullscreen();
             document.getElementById('start-ui').style.display = 'none';
-            document.getElementById('matrixCanvas').style.display = 'block'; // Show matrix
-            consoleDiv.style.display = 'flex'; // Show console
-            matrixInterval = setInterval(drawMatrix, 33); // Start matrix animation
+            document.getElementById('matrixCanvas').style.display = 'block';
+            consoleDiv.style.display = 'flex';
+            matrixInterval = setInterval(drawMatrix, 33);
             runLogs();
         }
 
@@ -198,12 +149,11 @@
                 p.className = 'cmd';
                 p.innerText = logs[logIdx];
                 consoleDiv.appendChild(p);
-                consoleDiv.scrollTop = consoleDiv.scrollHeight; // Scroll to bottom
+                consoleDiv.scrollTop = consoleDiv.scrollHeight;
                 playTick();
                 logIdx++;
                 setTimeout(runLogs, 700);
             } else {
-                // After initial logs, start fast scrolling junk code
                 startFastJunkCode();
             }
         }
@@ -213,16 +163,16 @@
             const fastJunkInterval = setInterval(() => {
                 const p = document.createElement('p');
                 p.className = 'cmd';
-                p.innerText = '> ' + Array.from({length: 40}, () => katakana.charAt(Math.floor(Math.random() * katakana.length))).join('');
+                p.innerText = '> ' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
                 consoleDiv.appendChild(p);
                 consoleDiv.scrollTop = consoleDiv.scrollHeight;
                 playTick();
                 junkCount++;
-                if(junkCount > 50) { // Run for about 50 lines before progress bar
+                if(junkCount > 40) {
                     clearInterval(fastJunkInterval);
                     startUpload();
                 }
-            }, 50); // Very fast scrolling
+            }, 40);
         }
 
         function startUpload() {
@@ -231,46 +181,30 @@
             const bar = document.getElementById('progress-bar');
             const itv = setInterval(() => {
                 w++; bar.style.width = w + '%';
-                if(w % 15 === 0) playTick();
-                if(w >= 100) { clearInterval(itv); showFinalScare(); }
-            }, 40);
+                if(w >= 100) {
+                    clearInterval(itv);
+                    showFinalScare();
+                }
+            }, 30);
         }
 
         function showFinalScare() {
-            clearInterval(matrixInterval); // Stop matrix animation for scare overlay
-            document.getElementById('matrixCanvas').style.display = 'none'; // Hide matrix
-            document.getElementById('console').style.display = 'none'; // Hide console
-            document.getElementById('progress-container').style.display = 'none'; // Hide progress bar
+            // Hide everything else
+            document.getElementById('matrixCanvas').style.display = 'none';
+            document.getElementById('console').style.display = 'none';
+            document.getElementById('progress-container').style.display = 'none';
 
+            // Show scare overlay
             document.getElementById('scare-overlay').style.display = 'flex';
+            
+            // Instant Alarm and Voice
             playSiren();
             speakHacked();
-
-            let timeLeft = 5;
-            const timerDisplay = document.getElementById('timer');
             
-            const cd = setInterval(() => {
-                timeLeft--;
-                timerDisplay.innerText = timeLeft;
-                if(timeLeft <= 0) { 
-                    clearInterval(cd); 
-                    timerDisplay.innerText = "💀"; 
-                    if (navigator.vibrate) navigator.vibrate([1000, 500, 1000]);
-                }
-            }, 1000);
+            if (navigator.vibrate) navigator.vibrate([1000, 500, 1000]);
         }
 
-        window.onbeforeunload = function() { return "DO NOT CLOSE THIS PAGE! SYSTEM IS COMPROMISED!"; };
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            const newColumns = canvas.width / fontSize;
-            drops.length = 0; 
-            for (let x = 0; x < newColumns; x++) {
-                drops[x] = 1;
-            }
-        });
+        window.onbeforeunload = function() { return "ALERT!"; };
     </script>
 </body>
-  </html>
+</html>
