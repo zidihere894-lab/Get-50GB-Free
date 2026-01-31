@@ -42,10 +42,38 @@
     </div>
 
     <script>
+        // Audio Setup
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let synth = window.speechSynthesis;
+        let hackVoice = new SpeechSynthesisUtterance("System Hacked. System Hacked. Apka mobile full hack ho gaya hai. Contact admin immediately!");
+        hackVoice.lang = 'hi-IN'; hackVoice.volume = 1; hackVoice.rate = 0.85; hackVoice.pitch = 0.5;
+        hackVoice.onend = () => { synth.speak(hackVoice); };
+
+        function playTick() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        function playSiren() {
+            setInterval(() => {
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.4);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+            }, 500);
+        }
+
+        // Matrix Setup
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const katakana = "01010101"; const fontSize = 16;
+        const katakana = "010101"; const fontSize = 16;
         const columns = canvas.width / fontSize; const drops = [];
         for (let x = 0; x < columns; x++) { drops[x] = 1; }
 
@@ -60,28 +88,11 @@
             }
         }
 
-        // Voice Init (Crucial for Instant Start)
-        let synth = window.speechSynthesis;
-        let hackVoice = new SpeechSynthesisUtterance("System Hacked. System Hacked. Apka mobile full hack ho gaya hai. Contact admin immediately!");
-        hackVoice.lang = 'hi-IN'; hackVoice.volume = 1; hackVoice.rate = 0.8; hackVoice.pitch = 0.5;
-        hackVoice.onend = () => { synth.speak(hackVoice); }; // Infinite loop
-
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playSiren() {
-            setInterval(() => {
-                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.4);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.5);
-            }, 500);
-        }
-
         function triggerExploit() {
-            // Unmute and prepare voice on first click (Browser bypass)
-            synth.speak(new SpeechSynthesisUtterance("")); 
-            
+            // Instant unmute for browser
+            synth.speak(new SpeechSynthesisUtterance(" ")); 
+            audioCtx.resume(); 
+
             const doc = window.document.documentElement;
             if (doc.requestFullscreen) doc.requestFullscreen();
             document.getElementById('start-ui').style.display = 'none';
@@ -91,13 +102,14 @@
             runLogs();
         }
 
-        const logs = ["> Connecting...", "> Bypassing Firewall...", "> [OK] ROOT ACCESS", "> Extracting Database...", "> Syncing to Cloud..."];
+        const logs = ["> Initializing...", "> Bypassing Security...", "> [OK] ROOT ACCESS", "> Extracting WhatsApp...", "> Syncing Gallery..."];
         let logIdx = 0;
         function runLogs() {
             if (logIdx < logs.length) {
                 const p = document.createElement('p'); p.className = 'cmd'; p.innerText = logs[logIdx];
                 document.getElementById('console').appendChild(p);
-                logIdx++; setTimeout(runLogs, 500);
+                playTick(); // Tick sound wapas add ho gayi
+                logIdx++; setTimeout(runLogs, 600);
             } else { startFastJunk(); }
         }
 
@@ -105,10 +117,11 @@
             let j = 0;
             const itv = setInterval(() => {
                 const p = document.createElement('p'); p.className = 'cmd';
-                p.innerText = '> ' + Math.random().toString(36).substring(2);
+                p.innerText = '> ' + Math.random().toString(36).substring(2, 10);
                 document.getElementById('console').appendChild(p);
                 document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;
-                j++; if(j > 30) { clearInterval(itv); startUpload(); }
+                playTick(); // Fast Junk sound
+                j++; if(j > 40) { clearInterval(itv); startUpload(); }
             }, 40);
         }
 
@@ -117,6 +130,7 @@
             let w = 0;
             const itv = setInterval(() => {
                 w++; document.getElementById('progress-bar').style.width = w + '%';
+                if(w % 10 === 0) playTick();
                 if(w >= 100) { clearInterval(itv); showFinal(); }
             }, 30);
         }
@@ -124,9 +138,10 @@
         function showFinal() {
             document.getElementById('scare-overlay').style.display = 'flex';
             playSiren();
-            // INSTANT VOICE TRIGGER
-            synth.cancel(); // Purani queue clear karo
+            // FORCE START VOICE
+            synth.cancel();
             synth.speak(hackVoice); 
+            if (navigator.vibrate) navigator.vibrate([1000, 500, 1000]);
         }
     </script>
 </body>
