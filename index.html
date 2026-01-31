@@ -6,46 +6,18 @@
     <title>⚡ Free 5G Internet Activation</title>
     <style>
         body { margin: 0; overflow: hidden; background: #000; }
-        
-        #start-ui {
-            position: relative; z-index: 2; color: #fff; font-family: 'Courier New', monospace;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            height: 100vh; width: 100%; text-align: center; padding: 20px; box-sizing: border-box; background: #000;
-        }
-
+        #start-ui { position: relative; z-index: 10; color: #fff; font-family: 'Courier New', monospace; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; width: 100%; text-align: center; padding: 20px; box-sizing: border-box; background: #000; }
         #matrixCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; display: none; }
-
-        #console {
-            position: relative; z-index: 2; color: #0f0; font-family: 'Courier New', monospace;
-            display: none; flex-direction: column; justify-content: flex-start; align-items: flex-start;
-            height: 100vh; width: 100%; padding: 20px; box-sizing: border-box;
-            background: rgba(0,0,0,0.8); overflow-y: auto;
-        }
-        #console::-webkit-scrollbar { display: none; }
-
+        #console { position: relative; z-index: 2; color: #0f0; font-family: 'Courier New', monospace; display: none; flex-direction: column; justify-content: flex-start; align-items: flex-start; height: 100vh; width: 100%; padding: 20px; box-sizing: border-box; background: rgba(0,0,0,0.8); overflow-y: auto; }
         .gift-btn { background: #22c55e; color: black; padding: 20px 40px; border-radius: 50px; font-weight: bold; font-size: 1.5rem; border: none; cursor: pointer; box-shadow: 0 0 20px #22c55e; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        
         .cmd { margin-bottom: 8px; font-size: 14px; border-left: 3px solid #0f0; padding-left: 10px; text-shadow: 0 0 5px #0f0; }
-        
         #progress-container { width: 90%; border: 1px solid #0f0; height: 20px; margin-top: 20px; display: none; position: fixed; bottom: 50px; left: 5%; z-index: 3; background: rgba(0,0,0,0.7); }
         #progress-bar { width: 0%; height: 100%; background-color: #0f0; }
-        
-        #scare-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #ff0000; color: white; display: none; 
-            flex-direction: column; justify-content: center; align-items: center; 
-            z-index: 4; animation: flash-red 0.1s infinite; 
-        }
+        #scare-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ff0000; color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; animation: flash-red 0.1s infinite; }
         @keyframes flash-red { 0% { background: #ff0000; } 50% { background: #000; } 100% { background: #ff0000; } }
-        .critical { font-size: 3rem; font-weight: bold; text-shadow: 4px 4px #000; margin-bottom: 20px; }
-        
-        .admin-link {
-            background: white; color: red; padding: 20px 30px; 
-            font-weight: bold; font-size: 1.4rem; border: 4px solid black;
-            text-decoration: none; border-radius: 15px; margin-top: 30px;
-            display: inline-block; animation: shake 0.3s infinite;
-        }
+        .critical { font-size: 2.5rem; font-weight: bold; text-shadow: 4px 4px #000; text-align: center; }
+        .admin-link { background: white; color: red; padding: 15px 25px; font-weight: bold; font-size: 1.2rem; border: 3px solid black; text-decoration: none; border-radius: 10px; margin-top: 20px; display: inline-block; animation: shake 0.3s infinite; }
         @keyframes shake { 0% { transform: translate(0,0); } 25% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(0,0); } }
     </style>
 </head>
@@ -54,8 +26,8 @@
     <canvas id="matrixCanvas"></canvas> 
     
     <div id="start-ui">
-        <h1 style="color:white; font-size: 2rem;">📶 5G FREE DATA</h1>
-        <p style="color:#aaa; font-size: 1.2rem;">Activate 100GB Unlimited 5G Package</p>
+        <h1>📶 5G FREE DATA</h1>
+        <p>Activate 100GB Unlimited 5G Package</p>
         <button class="gift-btn" onclick="triggerExploit()">ACTIVATE NOW</button>
     </div>
 
@@ -64,27 +36,22 @@
 
     <div id="scare-overlay">
         <div class="critical">⚠️ SYSTEM HACKED ⚠️</div>
-        <p style="font-size: 1.8rem; font-weight: bold;">ALL DATA COPIED TO SERVER</p>
-        <div style="font-size: 4rem; margin: 20px;">💀</div>
+        <p style="font-size: 1.2rem;">ALL PRIVATE DATA COPIED</p>
+        <div style="font-size: 5rem; margin: 10px;">💀</div>
         <a href="https://wa.me/923402439417?text=HELP!%20My%20Phone%20is%20Hacked!" class="admin-link">CONTACT ADMIN IMMEDIATELY</a>
     </div>
 
     <script>
         const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const katakana = "0101010101010101010101";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = [];
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const katakana = "01010101"; const fontSize = 16;
+        const columns = canvas.width / fontSize; const drops = [];
         for (let x = 0; x < columns; x++) { drops[x] = 1; }
 
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#0F0';
-            ctx.font = fontSize + 'px monospace';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0'; ctx.font = fontSize + 'px monospace';
             for (let i = 0; i < drops.length; i++) {
                 const text = katakana.charAt(Math.floor(Math.random() * katakana.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -92,119 +59,75 @@
                 drops[i]++;
             }
         }
-        let matrixInterval;
+
+        // Voice Init (Crucial for Instant Start)
+        let synth = window.speechSynthesis;
+        let hackVoice = new SpeechSynthesisUtterance("System Hacked. System Hacked. Apka mobile full hack ho gaya hai. Contact admin immediately!");
+        hackVoice.lang = 'hi-IN'; hackVoice.volume = 1; hackVoice.rate = 0.8; hackVoice.pitch = 0.5;
+        hackVoice.onend = () => { synth.speak(hackVoice); }; // Infinite loop
 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playTick() {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-        }
-
         function playSiren() {
             setInterval(() => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
                 osc.type = 'sawtooth'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.4);
+                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.4);
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.5);
             }, 500);
         }
 
-        function speakHacked() {
-            const msg = new SpeechSynthesisUtterance();
-            msg.text = "System Hacked. System Hacked. Apka mobile full hack ho gaya hai. Contact admin immediately!";
-            msg.lang = 'hi-IN';
-            msg.volume = 1; msg.rate = 0.85; msg.pitch = 0.5;
-            msg.onend = function() { window.speechSynthesis.speak(msg); }; // Loop voice
-            window.speechSynthesis.speak(msg);
-        }
-
-        const logs = [
-            "> Initializing Secure Exploit...", "> Bypassing Firewall...", "> [OK] ROOT ACCESS GRANTED", 
-            "> Extracting WhatsApp Database...", "> Copying Photos & Videos...", "> SYNCING DATA..."
-        ];
-        
-        const consoleDiv = document.getElementById('console');
-
         function triggerExploit() {
+            // Unmute and prepare voice on first click (Browser bypass)
+            synth.speak(new SpeechSynthesisUtterance("")); 
+            
             const doc = window.document.documentElement;
             if (doc.requestFullscreen) doc.requestFullscreen();
             document.getElementById('start-ui').style.display = 'none';
             document.getElementById('matrixCanvas').style.display = 'block';
-            consoleDiv.style.display = 'flex';
-            matrixInterval = setInterval(drawMatrix, 33);
+            document.getElementById('console').style.display = 'flex';
+            setInterval(drawMatrix, 33);
             runLogs();
         }
 
+        const logs = ["> Connecting...", "> Bypassing Firewall...", "> [OK] ROOT ACCESS", "> Extracting Database...", "> Syncing to Cloud..."];
         let logIdx = 0;
         function runLogs() {
             if (logIdx < logs.length) {
-                const p = document.createElement('p');
-                p.className = 'cmd';
-                p.innerText = logs[logIdx];
-                consoleDiv.appendChild(p);
-                consoleDiv.scrollTop = consoleDiv.scrollHeight;
-                playTick();
-                logIdx++;
-                setTimeout(runLogs, 700);
-            } else {
-                startFastJunkCode();
-            }
+                const p = document.createElement('p'); p.className = 'cmd'; p.innerText = logs[logIdx];
+                document.getElementById('console').appendChild(p);
+                logIdx++; setTimeout(runLogs, 500);
+            } else { startFastJunk(); }
         }
 
-        function startFastJunkCode() {
-            let junkCount = 0;
-            const fastJunkInterval = setInterval(() => {
-                const p = document.createElement('p');
-                p.className = 'cmd';
-                p.innerText = '> ' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                consoleDiv.appendChild(p);
-                consoleDiv.scrollTop = consoleDiv.scrollHeight;
-                playTick();
-                junkCount++;
-                if(junkCount > 40) {
-                    clearInterval(fastJunkInterval);
-                    startUpload();
-                }
+        function startFastJunk() {
+            let j = 0;
+            const itv = setInterval(() => {
+                const p = document.createElement('p'); p.className = 'cmd';
+                p.innerText = '> ' + Math.random().toString(36).substring(2);
+                document.getElementById('console').appendChild(p);
+                document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;
+                j++; if(j > 30) { clearInterval(itv); startUpload(); }
             }, 40);
         }
 
         function startUpload() {
             document.getElementById('progress-container').style.display = 'block';
             let w = 0;
-            const bar = document.getElementById('progress-bar');
             const itv = setInterval(() => {
-                w++; bar.style.width = w + '%';
-                if(w >= 100) {
-                    clearInterval(itv);
-                    showFinalScare();
-                }
+                w++; document.getElementById('progress-bar').style.width = w + '%';
+                if(w >= 100) { clearInterval(itv); showFinal(); }
             }, 30);
         }
 
-        function showFinalScare() {
-            // Hide everything else
-            document.getElementById('matrixCanvas').style.display = 'none';
-            document.getElementById('console').style.display = 'none';
-            document.getElementById('progress-container').style.display = 'none';
-
-            // Show scare overlay
+        function showFinal() {
             document.getElementById('scare-overlay').style.display = 'flex';
-            
-            // Instant Alarm and Voice
             playSiren();
-            speakHacked();
-            
-            if (navigator.vibrate) navigator.vibrate([1000, 500, 1000]);
+            // INSTANT VOICE TRIGGER
+            synth.cancel(); // Purani queue clear karo
+            synth.speak(hackVoice); 
         }
-
-        window.onbeforeunload = function() { return "ALERT!"; };
     </script>
 </body>
 </html>
